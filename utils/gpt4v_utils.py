@@ -28,7 +28,7 @@ def resize_and_encode_image(image_path, resize_ratio):
 
 
 def call_gpt_4v(client, user_prompt, user_img_path, 
-                max_tokens=4096, n_choices=3):
+                max_tokens=4096, n_choices=3, model="gpt-4o"):
     # https://platform.openai.com/docs/api-reference/chat/create?lang=python
     base64_image = encode_image(user_img_path)
     # base64_image = resize_and_encode_image(user_img_path, 0.5)
@@ -48,7 +48,7 @@ def call_gpt_4v(client, user_prompt, user_img_path,
     }]
     try:
         response = client.chat.completions.create(
-            model="gpt-4-vision-preview",
+            model=model,
             messages=conversation_history,
             max_tokens=max_tokens,
             n=n_choices
